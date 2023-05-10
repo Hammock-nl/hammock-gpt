@@ -4,7 +4,7 @@
 ~$*.doc*
 # Excel temporary
 ~$*.xls*
-.env
+/webpack/.env
 
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node
@@ -76,7 +76,7 @@ typings/
 
 # dotenv environment variables file
 .env.*
-!.env.defaults
+!.env.sample
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
