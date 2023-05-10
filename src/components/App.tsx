@@ -20,10 +20,7 @@ import {
     Pen24Regular,
     Translate24Regular,
 } from '@fluentui/react-icons'
-
 import axios from 'axios'
-
-type Props = {}
 
 enum Operation {
     Proofread = 'proofread',
@@ -43,26 +40,14 @@ const useStyles = makeStyles({
 })
 
 const languages = ['English', 'Dutch', 'French', 'Spanish', 'German', 'Russian']
-const sentiments = ['Layman', 'Friendly', 'Formal', 'Informal', 'Assertive', 'Sarcastic', 'Emoji']
-
-// // Function to replace selected text with the translated text
-// function replaceSelectedTextWithTranslation() {
-//     if (translatedTextGlobal !== null) {
-//         Office.context.mailbox.item.body.setSelectedDataAsync(translatedTextGlobal, {coercionType: Office.CoercionType.Html})
-//         console.log('Selected text replaced with translation.')
-//     } else {
-//         console.log('No translated text available. Please press the \'Translate\' button first.')
-//     }
-// }
-
-// Function to translate text using OpenAI's ChatGPT API
+const sentiments = ['Layman', 'Friendly', 'Formal', 'Informal', 'Assertive', 'Empathetic', 'Sarcastic', 'Emoji']
 
 const getQuery = (op: Operation, param?: string): string => {
     switch (op) {
         case Operation.Translate:
             return `Please translate the following text to ${param}, but keep the source language:`
         case Operation.Sentiment:
-            return `Please change the sentiment of the following text to ${param}, but keep the source language:`
+            return `Please change the sentiment of the following text to be more ${param}, but keep the source language:`
         case Operation.Proofread:
             return `Please correct and improve the following text in its source language, but don't change the source language:`
     }
@@ -87,13 +72,12 @@ const transform = (op: Operation, text: string, setTransformation: (transformati
         ],
     }
 
-    // Make the API request
     axios.post('https://api.openai.com/v1/chat/completions', data, {headers: headers})
         .then(response => setTransformation(response.data.choices[0].message.content))
 }
 
 
-export default function App(props: Props): ReactElement {
+export default function App(): ReactElement {
     const styles = useStyles()
     const [selection, setSelection] = useState<string>('')
     const [transformation, setTransformation] = useState<string>('')
